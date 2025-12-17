@@ -2,43 +2,138 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Facebook - Log in or Sign up</title>
-    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Fashion Shop</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link rel="stylesheet" href="telegram-clothes-shop.css">
 </head>
 <body>
-    <div class="container">
-        <div class="left-section">
-            <div class="logo">
-                <h1>facebook</h1>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <h1>👔 Fashion Shop</h1>
+                <button class="admin-toggle" id="adminToggle">⚙️</button>
             </div>
-            <div class="tagline">
-                <p>Facebook helps you connect and share with the people in your life.</p>
+        </header>
+
+        <!-- Shop View -->
+        <div class="shop-view" id="shopView">
+            <!-- Category Filter -->
+            <div class="category-filter" id="categoryFilter">
+                <button class="filter-btn active" data-category="all">All</button>
+                <button class="filter-btn" data-category="shirts">Shirts</button>
+                <button class="filter-btn" data-category="pants">Pants</button>
+                <button class="filter-btn" data-category="dresses">Dresses</button>
+                <button class="filter-btn" data-category="shoes">Shoes</button>
+                <button class="filter-btn" data-category="accessories">Accessories</button>
+            </div>
+
+            <!-- Products Grid -->
+            <div class="products-grid" id="productsGrid">
+                <!-- Products will be dynamically loaded here -->
+            </div>
+
+            <!-- Empty State -->
+            <div class="empty-state" id="emptyState" style="display: none;">
+                <div class="empty-icon">👕</div>
+                <p>No products available</p>
+                <p class="empty-subtitle">Add products in admin mode</p>
             </div>
         </div>
-        
-        <div class="right-section">
-            <div class="login-box">
-                <form id="loginForm">
-                    <input type="text" id="username" placeholder="Email address or phone number" required>
-                    <input type="password" id="password" placeholder="Password" required>
-                    <button type="submit" class="login-btn">Log in</button>
-                    <div class="forgot-password">
-                        <a href="#">Forgotten password?</a>
-                    </div>
-                    <div class="divider"></div>
-                    <button type="button" class="create-account-btn">Create new account</button>
-                </form>
+
+        <!-- Admin View -->
+        <div class="admin-view" id="adminView" style="display: none;">
+            <div class="admin-header">
+                <h2>Admin Panel</h2>
+                <button class="close-admin" id="closeAdmin">✕</button>
             </div>
-            <div class="create-page">
-                <p><a href="#">Create a Page</a> for a celebrity, brand or business.</p>
+
+            <div class="admin-content">
+                <div class="admin-section">
+                    <h3>Add New Product</h3>
+                    <form id="productForm" class="product-form">
+                        <div class="form-group">
+                            <label>Product Image</label>
+                            <div class="image-upload-area" id="imageUploadArea">
+                                <input type="file" id="imageInput" accept="image/*" hidden>
+                                <div class="upload-preview" id="uploadPreview" style="display: none;">
+                                    <img id="previewImage" src="" alt="Preview">
+                                    <button type="button" class="remove-preview" id="removePreview">✕</button>
+                                </div>
+                                <div class="upload-placeholder" id="uploadPlaceholder">
+                                    <span class="upload-icon">📷</span>
+                                    <p>Click to upload image</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Product Name</label>
+                            <input type="text" id="productName" placeholder="e.g., Blue Denim Shirt" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea id="productDescription" placeholder="Product description..." rows="3"></textarea>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Price ($)</label>
+                                <input type="number" id="productPrice" placeholder="29.99" step="0.01" min="0" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Category</label>
+                                <select id="productCategory" required>
+                                    <option value="">Select category</option>
+                                    <option value="shirts">Shirts</option>
+                                    <option value="pants">Pants</option>
+                                    <option value="dresses">Dresses</option>
+                                    <option value="shoes">Shoes</option>
+                                    <option value="accessories">Accessories</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Size</label>
+                                <input type="text" id="productSize" placeholder="S, M, L, XL">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Stock</label>
+                                <input type="number" id="productStock" placeholder="10" min="0">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="submit-btn">Add Product</button>
+                    </form>
+                </div>
+
+                <div class="admin-section">
+                    <h3>Manage Products</h3>
+                    <div class="products-list" id="adminProductsList">
+                        <!-- Admin product list will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Detail Modal -->
+        <div class="modal" id="productModal" style="display: none;">
+            <div class="modal-content">
+                <button class="modal-close" id="modalClose">✕</button>
+                <div class="modal-body" id="modalBody">
+                    <!-- Product details will be loaded here -->
+                </div>
             </div>
         </div>
     </div>
-    
-    <div id="output" class="output"></div>
-    
-    <script src="script.js"></script>
+
+    <script src="telegram-clothes-shop.js"></script>
 </body>
 </html>
 
